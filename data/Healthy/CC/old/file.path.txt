@@ -1,0 +1,11 @@
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/GSE84422/GPL96/samples/CC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/GSE84422/GPL97/samples/CC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/GSE5281/samples/CC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/GSE2164/GPL91/samples/CC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/GSE2164/GPL8300/samples/CC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/GSE102556/samples/CTR/CC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/Allen.brain.atlas/microarray.analysis/samples/CC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/brain.span/microarray/samples/CC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/brain.span/RNAseq/samples/CC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/GTEx_brain/DE_limma/samples/CC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/GSE45642/samples/CC/topTable.txt

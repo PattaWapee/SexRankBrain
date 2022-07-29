@@ -15,6 +15,7 @@ Healthy_UI <- function(id,label="Rank"){
     
     fluidRow(
       h3("Step1: Filtering sex-biased genes of each dataset before rank aggregation by p-value & logFC cutoff"),
+      h4("Please wait for 10 seconds for calculation"),
       
       ##### INPUT BOX #######
       box(title = "Sex-biased gene differential gene rank",

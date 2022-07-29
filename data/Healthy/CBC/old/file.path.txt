@@ -1,0 +1,15 @@
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/GSE46706/GPL5188_DE_raw/samples/CBC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/GSE46706/GPL5175_DE_raw_probeset/samples/CBC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/GSE25219/GPL5188/samples/CBC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/GSE25219/GPL5175/samples/CBC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/GSE36192/samples/CBC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/GSE2164/GPL91/samples/CBC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/GSE2164/GPL8300/samples/CBC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/GSE102556/samples/CTR/CBC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/Allen.brain.atlas/microarray.analysis/samples/CBC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/GSE44772/samples/CBC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/brain.span/microarray/samples/CBC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/brain.span/RNAseq/samples/CBC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/GTEx_brain/DE_limma/samples/CBC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/GSE35978/samples/CBC/topTable.txt
+/Users/pattama/Desktop/UiB/sex_differences/analysis_git/gender_diff/brain/GSE45642/samples/CBC/topTable.txt
