@@ -15,7 +15,7 @@ Healthy_UI <- function(id,label="Rank"){
     
     fluidRow(
       h3("Step1: Filtering sex-biased genes of each dataset before rank aggregation by p-value & logFC cutoff"),
-      h4("Please wait for 10 seconds for calculation"),
+      h4("Please wait for a few minutes for calculation"),
       
       ##### INPUT BOX #######
       box(title = "Sex-biased gene differential gene rank",
@@ -47,7 +47,7 @@ Healthy_UI <- function(id,label="Rank"){
       h3("Step2: Combind all dataset ranks by RRA and filtered sex-biased genes by RRA p-value"),
       
       box(title = 'Robust Rank aggregation cutoff',
-          sliderInput(NS(id,"RRA_p_value"), "RRA p-value cutoff:", min=0, max = 1, value = 1)
+          sliderInput(NS(id,"RRA_p_value"), "RRA p-value cutoff:", min=0, max = 1, value = 0.05)
           ),
       #box(title = 'Rank aggregation table of male-biased genes',
       #    dataTableOutput(NS(id,"RRAM")))
