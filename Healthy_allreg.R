@@ -14,26 +14,41 @@ HealthyAllUI <- function(id,label="RankAll"){
     
     
     fluidRow(
+      h3("Rank aggregation of Sex-biased genes of all brain regions"),
+      h4("Please wait a few minutes for loading data"),
       column(width = 6,
              box(width = NULL, height = 300,imageOutput(NS(id, "image"))),
              box(width = NULL,
-                 title = "Editable cutoff for RRA rank aggregation",
-                 DTOutput(NS(id,"cutoff"))
+                 title = "Please choose cutoff for RRA rank aggregation",
+                 #DTOutput(NS(id,"cutoff"))
+             selectInput(NS(id,"DE_p_value"), "DE p-value cutoff:",
+                         choices = list("0.05" = 0.05, "0.1" = 0.1
+                                        ), selected = 0.05
+                      ),
+             selectInput(NS(id,"FC"),"FC cutoff", 
+                      choices = list("1.2" = 1.2, "1.5" = 1.5, "2.0" = 2.0
+                                     ), selected = 1.2
+                      ),
+             selectInput(NS(id,"RRA_p_value"),"RRA p-value cutoff", 
+                         choices = list("0.05" = 0.05, "0.1" = 0.1
+                                        ), selected = 0.05
+                      ),
+             
              )
       ),
       column(width = 6,
              box(width = NULL,
                  title = "The number of RRA sex-biased genes across brain regions",
-                 plotOutput(NS(id,"plt_RRAgene_num"))
+                 #plotOutput(NS(id,"plt_RRAgene_num"))
                  #dataTableOutput(NS(id,"table"))
                  
              ),
              box(width = NULL,
                  title = "Correlation heatmap of sex-biased genes",
                  h4("Female"),
-                 plotOutput(NS(id,"F_corr_plot")),
+                 #plotOutput(NS(id,"F_corr_plot")),
                  h4("Male"),
-                 plotOutput(NS(id,"M_corr_plot"))
+                 #plotOutput(NS(id,"M_corr_plot"))
                  )
       )
       
@@ -48,21 +63,21 @@ HealthyAllUI <- function(id,label="RankAll"){
              id = "GO",
              tabPanel("GO Biological Process",
                       h4("Female"),
-                      plotOutput(NS(id,"GO_BP_F")),
+                      #plotOutput(NS(id,"GO_BP_F")),
                       h4("Male"),
-                      plotOutput(NS(id,"GO_BP_M"))
+                      #plotOutput(NS(id,"GO_BP_M"))
              ),
              tabPanel("GO Molecular Function",
                       h4("Female"),
-                      plotOutput(NS(id,"GO_MO_F")),
+                      #plotOutput(NS(id,"GO_MO_F")),
                       h4("Male"),
-                      plotOutput(NS(id,"GO_MO_M"))
+                      #plotOutput(NS(id,"GO_MO_M"))
              ),
              tabPanel("GO Cellular Component",
                       h4("Female"),
-                      plotOutput(NS(id,"GO_CC_F")),
+                      #plotOutput(NS(id,"GO_CC_F")),
                       h4("Male"),
-                      plotOutput(NS(id,"GO_CC_M")),
+                      #plotOutput(NS(id,"GO_CC_M")),
              )
       )
       
@@ -75,9 +90,9 @@ HealthyAllUI <- function(id,label="RankAll"){
       box(width = 12,
           title = "DisGeNET Enrichment",
           h4("Female"),
-          plotOutput(NS(id,"Dis_F")),
+          #plotOutput(NS(id,"Dis_F")),
           h4("Male"),
-          plotOutput(NS(id,"Dis_M"))
+          #plotOutput(NS(id,"Dis_M"))
           )
       
     ),
@@ -87,9 +102,9 @@ HealthyAllUI <- function(id,label="RankAll"){
       box(width = 12,
           title = "KEGG Enrichment",
           h4("Female"),
-          plotOutput(NS(id,"KEGG_F")),
+          #plotOutput(NS(id,"KEGG_F")),
           h4("Male"),
-          plotOutput(NS(id,"KEGG_M"))
+          #plotOutput(NS(id,"KEGG_M"))
           )
       
       
@@ -117,92 +132,10 @@ HealthyAllServer <- function(id) {
     # 1. Get input cutoff from user for RRA
     print("Get input cutoff")
     
-    cutoff <- reactiveValues(df=inputdata)
-    output$cutoff <- renderDT(cutoff$df,selection = 'none', server = TRUE, editable ="cell")
-    observeEvent(input$cutoff_cell_edit, {
-      
-      cutoff$df <- editData(cutoff$df, input$cutoff_cell_edit, 'cutoff')
-      
-    })
     
     
-    # 2. Run RRA and filter from pvalue
-    print("Run RRA and filter from pvalue")
-    RRA_F <-reactive( {cal_filter_RRAreg(cutoff$df,"F","Healthy")} )
-    RRA_M <-reactive( {cal_filter_RRAreg(cutoff$df,"M","Healthy")} )
-    print("Calculate number of sex-biased genes")
-    num_fil_df <- reactive( numfil_gene(RRA_F() ,RRA_M() ) )
-    print("Plot number of sex-biased genes")
-    plt_num_fil <- reactive({
-      ggplot(num_fil_df(), aes(x=dataset, y=value, fill=gender)) +
-        geom_bar(stat="identity",position='dodge') +
-        scale_fill_manual(values=c("deeppink", "dodgerblue"))+
-        theme(axis.text.x = element_text(angle = 45))    
-    })
     
     
-    # 3. Plot number of filtered genes for each dataset
-    output$plt_RRAgene_num <- renderPlot(plt_num_fil())
-    #output$table <- renderDataTable( num_fil_df()  )
-    
-    # 4. Plot correlation matrix heatmap
-    library(RColorBrewer)
-    m_coul <- colorRampPalette(brewer.pal(9, "YlGnBu"))(25)
-    f_coul <- colorRampPalette(brewer.pal(9, "RdPu"))(25)
-    output$F_corr_plot <-  renderPlot({
-      F_corr <- correlation_reg( RRA_F() )
-      heatmap(F_corr,col=f_coul,scale = "row")
-    })
-    
-    output$M_corr_plot <-  renderPlot({
-      M_corr <- correlation_reg( RRA_M() )
-      heatmap(M_corr,col=m_coul,scale = "row")
-    })
-    
-    # 4. Enrichment of GO, DisGeNET
-    output$GO_BP_F <- renderPlot({
-      run_plt_enrich(RRA_F(), "GO_Biological_Process_2021", "F")
-    })
-    
-    output$GO_BP_M <- renderPlot({
-      run_plt_enrich(RRA_M(), "GO_Biological_Process_2021", "M")
-    })
-    
-    output$GO_MO_F <- renderPlot({
-      run_plt_enrich(RRA_F(), "GO_Molecular_Function_2021", "F")
-    })
-    
-    output$GO_MO_M <- renderPlot({
-      run_plt_enrich(RRA_M(), "GO_Molecular_Function_2021", "M")
-    })
-    
-    output$GO_CC_F <- renderPlot({
-      run_plt_enrich(RRA_F(), "GO_Cellular_Component_2021", "F")
-    })
-    
-    output$GO_CC_M <- renderPlot({
-      run_plt_enrich(RRA_M(), "GO_Cellular_Component_2021", "M")
-    })
-    
-    # DisGeNET
-    output$Dis_F <- renderPlot({
-      run_plt_enrich(RRA_F(), "DisGeNET", "F")
-    })
-    
-    
-    output$Dis_M <- renderPlot({
-      run_plt_enrich(RRA_M(), "DisGeNET", "M")
-    })
-    
-    # KEGG
-    output$KEGG_F <- renderPlot({
-      run_plt_enrich(RRA_F(), "KEGG_2021_Human", "F")
-    })
-    
-    
-    output$KEGG_M <- renderPlot({
-      run_plt_enrich(RRA_M(), "KEGG_2021_Human", "M")
-    })
     
   })
 }
