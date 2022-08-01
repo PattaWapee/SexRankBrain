@@ -1,0 +1,3 @@
+"Cluster" "ID" "Description" "GeneRatio" "BgRatio" "pvalue" "p.adjust" "qvalue" "geneID" "Count"
+"1" "AMY" "hsa03010" "Ribosome" "1/1" "158/8159" 0.0193651182742982 0.0284348572128937 NA "6192" 1
+"2" "AMY" "hsa05171" "Coronavirus disease - COVID-19" "1/1" "232/8159" 0.0284348572128937 0.0284348572128937 NA "6192" 1

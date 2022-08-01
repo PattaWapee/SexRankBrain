@@ -1,0 +1,9 @@
+"Cluster" "ID" "Description" "GeneRatio" "BgRatio" "pvalue" "p.adjust" "qvalue" "geneID" "Count"
+"1" "FC" "hsa04350" "TGF-beta signaling pathway" "1/1" "94/8159" 0.0115210197328104 0.0115210197328104 NA "26585" 1
+"2" "OC" "hsa05033" "Nicotine addiction" "1/1" "40/8159" 0.00490256158842994 0.0167299914205171 NA "2557" 1
+"3" "OC" "hsa04742" "Taste transduction" "1/1" "86/8159" 0.0105405074151244 0.0167299914205171 NA "2557" 1
+"4" "OC" "hsa04727" "GABAergic synapse" "1/1" "89/8159" 0.0109081995342566 0.0167299914205171 NA "2557" 1
+"5" "OC" "hsa05032" "Morphine addiction" "1/1" "91/8159" 0.011153327613678 0.0167299914205171 NA "2557" 1
+"6" "OC" "hsa04723" "Retrograde endocannabinoid signaling" "1/1" "148/8159" 0.0181394778771907 0.0217673734526289 NA "2557" 1
+"7" "OC" "hsa04080" "Neuroactive ligand-receptor interaction" "1/1" "362/8159" 0.0443681823752912 0.0443681823752912 NA "2557" 1
+"8" "PL" "hsa04080" "Neuroactive ligand-receptor interaction" "1/1" "362/8159" 0.0443681823752912 0.0443681823752912 NA "84539" 1

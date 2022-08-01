@@ -1,0 +1,3 @@
+"Cluster" "ID" "Description" "GeneRatio" "BgRatio" "pvalue" "p.adjust" "qvalue" "geneID" "Count"
+"1" "FC" "hsa03010" "Ribosome" "2/4" "158/8159" 0.00217946736730447 0.00871786946921789 0.00458835235221994 "6192/140032" 2
+"2" "FC" "hsa05171" "Coronavirus disease - COVID-19" "2/4" "232/8159" 0.00465121921847588 0.00930243843695176 0.00489602022997461 "6192/140032" 2
