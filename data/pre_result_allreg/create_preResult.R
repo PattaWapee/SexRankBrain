@@ -11,7 +11,7 @@ plt_num_fil <- function(num_fil_df,output_file){
     theme(axis.text.x = element_text(angle = 45))    
   
   png(output_file, units="in",
-      width=5, height=5, res = 300)
+      width=4, height=5, res = 300)
   print(plot_num)
   dev.off()
 }

@@ -24,7 +24,7 @@ plot_GO <-  function(input_ls, GO.ont, gender, font_size, output_name){
   en.GO <- compareGO(input_ls,GO.ont)
   GO.plot <- dotplot(en.GO,by = 'count',
         title = paste0(GO.ont," of ",gender,"-biased genes"), font.size = font_size)
-  tiff(paste0("plt_enrich_img/",output_name,"_",GO.ont,"_",gender,".tiff"), 
+  png(paste0("plt_enrich_img/",output_name,"_",GO.ont,"_",gender,".png"), 
        units="in", width=7, height=7.5, res=300)
   print(GO.plot)
   dev.off()
@@ -67,7 +67,7 @@ plot_KEG <-  function(input_ls, gender, output_name){
   en <- compareKEGG(input_ls)
   enplot <- dotplot(en,by = 'count',
         title = paste0("KEGG pathway of ",gender,"-biased genes"), font.size = 12)
-  tiff(paste0("plt_enrich_img/",output_name,"_",gender,"_KEGG.tiff"), units="in", width=7, height=7.5, res=300)
+  png(paste0("plt_enrich_img/",output_name,"_",gender,"_KEGG.png"), units="in", width=7, height=7.5, res=300)
   print(enplot)
   dev.off()
   en.df <- as.data.frame(en)
@@ -79,9 +79,9 @@ plot_KEG <-  function(input_ls, gender, output_name){
 ###############
 plot_Dis <-  function(RRA_df, gender, output_name){
   Dis <- run_plt_enrich(RRA_df, "DisGeNET (CURATED)", "disgenet2r",gender)
-  tiff(paste0("plt_enrich_img/",
+  png(paste0("plt_enrich_img/",
               output_name,"_",gender,
-              "_DisGeNET_curated.tiff"), 
+              "_DisGeNET_curated.png"), 
        units="in", width=7, height=7.5, res=300)
   print(Dis)
   dev.off()
