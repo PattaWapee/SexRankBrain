@@ -48,13 +48,6 @@ Healthy_UI <- function(id,label="Rank"){
       
       box(title = 'Robust Rank aggregation cutoff',
           sliderInput(NS(id,"RRA_p_value"), "RRA p-value cutoff:", min=0, max = 1, value = 0.05),
-          selectInput(NS(id,"Select_download_RRA"),"Download RRA table",
-                      choices = list("Female-biased genes" = 1, 
-                                     "Male-biased genes" = 2
-                      ), selected = 1
-          ),
-          # Button
-          downloadButton("downloadRRA", "Download")
           
           ),
       #box(title = 'Rank aggregation table of male-biased genes',
@@ -125,7 +118,10 @@ Healthy_UI <- function(id,label="Rank"){
 }
 
 
+
+
 Healthy_Server <- function(id) {
+
   moduleServer(id, function(input, output, session) {
     
 
@@ -160,16 +156,34 @@ Healthy_Server <- function(id) {
       RRA_M <- RA.analysis(Msig)
       sig_RRA_M <- RRA_M[ RRA_M['P.value'] < input$RRA_p_value,]
     })
-    output$RRAFtable <- renderDataTable(RRA_F())
-    output$RRAMtable <- renderDataTable(RRA_M())
+    output$RRAFtable <- renderDataTable(RRA_F(),server = FALSE,extensions = 'Buttons',
+                                        options = list(scrollX=TRUE, lengthMenu = c(5,10,15),
+                                                       paging = TRUE, searching = TRUE,
+                                                       fixedColumns = TRUE, autoWidth = TRUE,
+                                                       ordering = TRUE, dom = 'tBp',
+                                                       #ordering = TRUE, dom = 'Bfrtip',
+                                                       buttons = c('copy', 'csv', 'excel','pdf'))
+                                        )
+    output$RRAMtable <- renderDataTable(RRA_M(),server = FALSE,extensions = 'Buttons',
+                                        options = list(scrollX=TRUE, lengthMenu = c(5,10,15),
+                                                       paging = TRUE, searching = TRUE,
+                                                       fixedColumns = TRUE, autoWidth = TRUE,
+                                                       ordering = TRUE, dom = 'tBp',
+                                                       #ordering = TRUE, dom = 'Bfrtip',
+                                                       buttons = c('copy', 'csv', 'excel','pdf')))
     
     # 4. Plot number of filtered genes for each dataset and RRA
     output$plt_RRAnum <- renderPlot({
       num_RRA <- data.frame(Female=c(nrow(RRA_F() )),Male=c(nrow(RRA_M() )) )
       barplot(t(as.matrix(num_RRA)),beside=TRUE,col = c('deeppink','dodgerblue'))
     })
-    
-    # 5. Enrichment of GO, DisGeNET
+
+    # 5. User download RRA table
+    #callModule(dlmodule,'download1', RRA_F = RRA_F())
+
+
+
+    # 6. Enrichment of GO, DisGeNET
     
     output$GO_BP_F <- renderPlot(plt_enriched_reg(RRA_F(), "GO_Biological_Process_2021"))
     output$GO_BP_M <- renderPlot(plt_enriched_reg(RRA_M(), "GO_Biological_Process_2021"))
@@ -198,4 +212,8 @@ Healthy_Server <- function(id) {
     
   
   })
+
+
+
+
 }
