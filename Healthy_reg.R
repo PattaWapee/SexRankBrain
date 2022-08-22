@@ -48,11 +48,14 @@ Healthy_UI <- function(id,label="Rank"){
       
       box(title = 'Robust Rank aggregation cutoff',
           sliderInput(NS(id,"RRA_p_value"), "RRA p-value cutoff:", min=0, max = 1, value = 0.05),
-          selectInput(NS(id,"Download_RRA"),"Download RRA table",
+          selectInput(NS(id,"Select_download_RRA"),"Download RRA table",
                       choices = list("Female-biased genes" = 1, 
                                      "Male-biased genes" = 2
                       ), selected = 1
-          )
+          ),
+          # Button
+          downloadButton("downloadRRA", "Download")
+          
           ),
       #box(title = 'Rank aggregation table of male-biased genes',
       #    dataTableOutput(NS(id,"RRAM")))
