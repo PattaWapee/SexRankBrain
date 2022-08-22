@@ -18,7 +18,7 @@ Healthy_UI <- function(id,label="Rank"){
       h4("Please wait for a few minutes for calculation"),
       
       ##### INPUT BOX #######
-      box(title = "Sex-biased gene differential gene rank",
+      box(title = "Sex-biasedMne differential gene rank",
           selectInput(NS(id,"region"),"brain region",
                       choices = list("AMY" = 1, "CBC" = 2, "CC" = 3,
                                      "FC" = 4, "HIP" = 5, "MED" = 6,
@@ -47,7 +47,12 @@ Healthy_UI <- function(id,label="Rank"){
       h3("Step2: Combind all dataset ranks by RRA and filtered sex-biased genes by RRA p-value"),
       
       box(title = 'Robust Rank aggregation cutoff',
-          sliderInput(NS(id,"RRA_p_value"), "RRA p-value cutoff:", min=0, max = 1, value = 0.05)
+          sliderInput(NS(id,"RRA_p_value"), "RRA p-value cutoff:", min=0, max = 1, value = 0.05),
+          selectInput(NS(id,"Download_RRA"),"Download RRA table",
+                      choices = list("Female-biased genes" = 1, 
+                                     "Male-biased genes" = 2
+                      ), selected = 1
+          )
           ),
       #box(title = 'Rank aggregation table of male-biased genes',
       #    dataTableOutput(NS(id,"RRAM")))
