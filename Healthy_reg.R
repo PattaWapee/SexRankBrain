@@ -82,27 +82,34 @@ Healthy_UI <- function(id,label="Rank"){
                       downloadButton(NS(id,'downloadGO_BP_F'), 'Download plot' ),
                       
                       h4("Male"),
-                      plotOutput(NS(id,"GO_BP_M"))
+                      plotOutput(NS(id,"GO_BP_M")),
+                      downloadButton(NS(id,'downloadGO_BP_M'), 'Download plot' ),
                       ),
              tabPanel("GO Molecular Function",
                       h4("Female"),
                       plotOutput(NS(id,"GO_MO_F")),
+                      downloadButton(NS(id,'downloadGO_MO_F'), 'Download plot' ),
                       h4("Male"),
-                      plotOutput(NS(id,"GO_MO_M"))
+                      plotOutput(NS(id,"GO_MO_M")),
+                      downloadButton(NS(id,'downloadGO_MO_M'), 'Download plot' ),
                       ),
              tabPanel("GO Cellular Component",
                       h4("Female"),
                       plotOutput(NS(id,"GO_CC_F")),
+                      downloadButton(NS(id,'downloadGO_CC_F'), 'Download plot' ),
                       h4("Male"),
                       plotOutput(NS(id,"GO_CC_M")),
+                      downloadButton(NS(id,'downloadGO_CC_M'), 'Download plot' ),
                       )
           ),
       
       box(title = "DisGeNET Enrichement",
           h4("Female"),
           plotOutput(NS(id,"Dis_F")),
+          downloadButton(NS(id,'downloadDis_F'), 'Download plot' ),
           h4("Male"),
-          plotOutput(NS(id,"Dis_M"))
+          plotOutput(NS(id,"Dis_M")),
+          downloadButton(NS(id,'downloadDis_M'), 'Download plot' ),
           ),
       box(title = "KEGG enrichment",
           h4("Female"),
@@ -223,9 +230,14 @@ Healthy_Server <- function(id) {
 
     # 6. Enrichment of GO, DisGeNET
     
+
+    ############
+    ## GO BP####
+    ############
     output$GO_BP_F <- renderPlot(plt_enriched_reg(RRA_F(), "GO_Biological_Process_2021"))
     output$GO_BP_M <- renderPlot(plt_enriched_reg(RRA_M(), "GO_Biological_Process_2021"))
     pltGO_BP_F <- reactive( plt_enriched_reg(RRA_F(), "GO_Biological_Process_2021" ))
+    pltGO_BP_M <- reactive( plt_enriched_reg(RRA_M(), "GO_Biological_Process_2021" ))
     # User download GO plot
     output$downloadGO_BP_F <- downloadHandler(
                                               filename = "GO_BP_F.tiff",
@@ -234,19 +246,79 @@ Healthy_Server <- function(id) {
                                                 plot(pltGO_BP_F())
                                                 dev.off()}
                               )
-
+    output$downloadGO_BP_M <- downloadHandler(
+                                              filename = "GO_BP_M.tiff",
+                                              content = function(file) {
+                                                tiff(file, res = 300, units = 'in', height =5, width = 5)
+                                                plot(pltGO_BP_M())
+                                                dev.off()}
+                              )
+    ###########
+    ## GO MO ##
+    ###########
     output$GO_MO_F <- renderPlot(plt_enriched_reg(RRA_F(), "GO_Molecular_Function_2021"))
     output$GO_MO_M <- renderPlot(plt_enriched_reg(RRA_M(), "GO_Molecular_Function_2021"))
+    pltGO_MO_F <- reactive( plt_enriched_reg(RRA_F(), "GO_Molecular_Function_2021"))
+    pltGO_MO_M <- reactive( plt_enriched_reg(RRA_M(), "GO_Molecular_Function_2021"))
     
+    # User download GO plot
+    output$downloadGO_MO_F <- downloadHandler(
+                                              filename = "GO_MO_F.tiff",
+                                              content = function(file) {
+                                                tiff(file, res = 300, units = 'in', height =5, width = 5)
+                                                plot(pltGO_MO_F())
+                                                dev.off()}
+                              )
+    output$downloadGO_MO_M <- downloadHandler(
+                                              filename = "GO_MO_M.tiff",
+                                              content = function(file) {
+                                                tiff(file, res = 300, units = 'in', height =5, width = 5)
+                                                plot(pltGO_MO_M())
+                                                dev.off()}
+                              )
     output$GO_CC_F <- renderPlot(plt_enriched_reg(RRA_F(), "GO_Cellular_Component_2021"))
     output$GO_CC_M <- renderPlot(plt_enriched_reg(RRA_M(), "GO_Cellular_Component_2021"))
-    
+    pltGO_CC_F <- reactive( plt_enriched_reg(RRA_F(), "GO_Cellular_Component_2021"))
+    pltGO_CC_M <- reactive( plt_enriched_reg(RRA_M(), "GO_Cellular_Component_2021"))
+
+    output$downloadGO_CC_F <- downloadHandler(
+                                              filename = "GO_CC_F.tiff",
+                                              content = function(file) {
+                                                tiff(file, res = 300, units = 'in', height =5, width = 5)
+                                                plot(pltGO_CC_F())
+                                                dev.off()}
+                              )
+    output$downloadGO_CC_M <- downloadHandler(
+                                              filename = "GO_CC_M.tiff",
+                                              content = function(file) {
+                                                tiff(file, res = 300, units = 'in', height =5, width = 5)
+                                                plot(pltGO_CC_M())
+                                                dev.off()})
+    ###############
+    ## DisGeNET ###
+    ##############
     output$Dis_F <- renderPlot({
       plt_enriched_reg(RRA_F(), "DisGeNET")
     })
     output$Dis_M <- renderPlot({
       plt_enriched_reg(RRA_M(), "DisGeNET")
     })
+    pltDis_F <- reactive( plt_enriched_reg(RRA_F(), "DisGeNET"))
+    pltDis_M <- reactive( plt_enriched_reg(RRA_M(), "DisGeNET"))
+    
+    output$downloadDis_F <- downloadHandler(
+                                              filename = "DisGeNET_F.tiff",
+                                              content = function(file) {
+                                                tiff(file, res = 300, units = 'in', height =5, width = 5)
+                                                plot(pltDis_F())
+                                                dev.off()}
+                              )
+    output$downloadDis_M <- downloadHandler(
+                                              filename = "DisGeNET_M.tiff",
+                                              content = function(file) {
+                                                tiff(file, res = 300, units = 'in', height =5, width = 5)
+                                                plot(pltDis_M())
+                                                dev.off()})
     
     # KEGG
     output$KEGG_F <- renderPlot({
