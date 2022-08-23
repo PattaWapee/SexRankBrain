@@ -36,7 +36,8 @@ Healthy_UI <- function(id,label="Rank"){
       ######## OUTPUT BOX ######
       
       box(title='The number of sex-biased genes',
-          plotOutput(NS(id,"plt_gene_num"))
+          plotOutput(NS(id,"plt_gene_num")),
+          downloadButton(NS(id,'downloadNum'), 'Download plot' )
           )
       
       
@@ -55,7 +56,8 @@ Healthy_UI <- function(id,label="Rank"){
       tabBox(title = "RRA output",
              id= "tabRRA",
              tabPanel("Output","The number of RRA genes",
-                      plotOutput(NS(id,"plt_RRAnum"))
+                      plotOutput(NS(id,"plt_RRAnum")),
+                      downloadButton(NS(id,'downloadRRANum'), 'Download plot' )
                       #dataTableOutput(NS(id, "RRAF"))
              ),
              
@@ -77,6 +79,8 @@ Healthy_UI <- function(id,label="Rank"){
              tabPanel("GO Biological Process",
                       h4("Female"),
                       plotOutput(NS(id,"GO_BP_F")),
+                      downloadButton(NS(id,'downloadGO_BP_F'), 'Download plot' ),
+                      
                       h4("Male"),
                       plotOutput(NS(id,"GO_BP_M"))
                       ),
@@ -119,7 +123,6 @@ Healthy_UI <- function(id,label="Rank"){
 
 
 
-
 Healthy_Server <- function(id) {
 
   moduleServer(id, function(input, output, session) {
@@ -142,6 +145,24 @@ Healthy_Server <- function(id) {
         scale_fill_manual(values=c("deeppink", "dodgerblue"))+
         theme(axis.text.x = element_text(angle = 45))      
     })
+
+    # save plot
+    num_df <- reactive( numfil_gene(sig_reg_F(), sig_reg_M() ) )
+    num_plot <- reactive( ggplot(num_df(), aes(x=dataset, y=value, fill=gender)) +
+                         geom_bar(stat="identity",position='dodge') +
+                         scale_fill_manual(values=c("deeppink", "dodgerblue"))+
+                         theme(axis.text.x = element_text(angle = 45))
+                       )
+
+
+    output$downloadNum <- downloadHandler(
+    filename = "Sex_biased_genes.tiff",
+    content = function(file) {
+        tiff(file, res = 300, units = 'in', height =5, width = 5)
+        plot(num_plot())
+        dev.off()
+    }
+    )
     
     # 3. Rank aggregation of filtered genes with RRA pvalue cutoff
     
@@ -178,8 +199,25 @@ Healthy_Server <- function(id) {
       barplot(t(as.matrix(num_RRA)),beside=TRUE,col = c('deeppink','dodgerblue'))
     })
 
-    # 5. User download RRA table
-    #callModule(dlmodule,'download1', RRA_F = RRA_F())
+    plt_RRA_num <- reactive({
+      num_RRA <- data.frame(Number_of_genes=c(nrow(RRA_F() ), nrow(RRA_M() )),
+                            Sex = c('Female', 'Male')
+      )
+      ggplot(num_RRA, aes(x= Sex, y = Number_of_genes, fill = Sex))+
+        geom_bar(stat = 'identity')+
+        scale_fill_manual(values=c("deeppink", "dodgerblue"))
+
+    })
+
+    # 5. User download RRA plot
+    output$downloadRRANum <- downloadHandler(
+    filename = "Number_of_sex_biased_RRA_filtered.tiff",
+    content = function(file) {
+        tiff(file, res = 300, units = 'in', height =5, width = 5)
+        plot(plt_RRA_num())
+        dev.off()
+    }
+    )
 
 
 
@@ -187,7 +225,16 @@ Healthy_Server <- function(id) {
     
     output$GO_BP_F <- renderPlot(plt_enriched_reg(RRA_F(), "GO_Biological_Process_2021"))
     output$GO_BP_M <- renderPlot(plt_enriched_reg(RRA_M(), "GO_Biological_Process_2021"))
-    
+    pltGO_BP_F <- reactive( plt_enriched_reg(RRA_F(), "GO_Biological_Process_2021" ))
+    # User download GO plot
+    output$downloadGO_BP_F <- downloadHandler(
+                                              filename = "GO_BP_F.tiff",
+                                              content = function(file) {
+                                                tiff(file, res = 300, units = 'in', height =5, width = 5)
+                                                plot(pltGO_BP_F())
+                                                dev.off()}
+                              )
+
     output$GO_MO_F <- renderPlot(plt_enriched_reg(RRA_F(), "GO_Molecular_Function_2021"))
     output$GO_MO_M <- renderPlot(plt_enriched_reg(RRA_M(), "GO_Molecular_Function_2021"))
     
