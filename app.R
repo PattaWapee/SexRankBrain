@@ -3,6 +3,7 @@ library(shinydashboard)
 
 source('Healthy_reg.R')
 source('Healthy_allreg.R')
+source('Summary.R')
 
 WebApp <- function() {
   
@@ -36,7 +37,8 @@ WebApp <- function() {
         
         
         tabItem(tabName = "About",
-                h2("About"),
+                SummaryUI('Summary')
+                #h2("About"),
                 
         )
       )

@@ -114,8 +114,10 @@ Healthy_UI <- function(id,label="Rank"){
       box(title = "KEGG enrichment",
           h4("Female"),
           plotOutput(NS(id,"KEGG_F")),
+          downloadButton(NS(id,'downloadKEGG_F'), 'Download plot' ),
           h4("Male"),
-          plotOutput(NS(id,"KEGG_M"))
+          plotOutput(NS(id,"KEGG_M")),
+          downloadButton(NS(id,'downloadKEGG_M'), 'Download plot' ),
           )
       
     
@@ -319,14 +321,31 @@ Healthy_Server <- function(id) {
                                                 tiff(file, res = 300, units = 'in', height =5, width = 5)
                                                 plot(pltDis_M())
                                                 dev.off()})
-    
-    # KEGG
+    ########
+    # KEGG #
+    ########
     output$KEGG_F <- renderPlot({
       plt_enriched_reg(RRA_F(), "KEGG_2021_Human")
     })
     output$KEGG_M <- renderPlot({
       plt_enriched_reg(RRA_M(), "KEGG_2021_Human")
     })
+    pltKEGG_F <- reactive( plt_enriched_reg(RRA_F(), "KEGG_2021_Human"))
+    pltKEGG_M <- reactive( plt_enriched_reg(RRA_M(), "KEGG_2021_Human"))
+    output$downloadKEGG_F <- downloadHandler(
+                                              filename = "KEGG_F.tiff",
+                                              content = function(file) {
+                                                tiff(file, res = 300, units = 'in', height =5, width = 5)
+                                                plot(pltKEGG_F())
+                                                dev.off()}
+                              )
+    output$downloadKEGG_M <- downloadHandler(
+                                              filename = "KEGG_M.tiff",
+                                              content = function(file) {
+                                                tiff(file, res = 300, units = 'in', height =5, width = 5)
+                                                plot(pltKEGG_M())
+                                                dev.off()}
+                              )
     
     
   
