@@ -18,7 +18,7 @@ Healthy_UI <- function(id,label="Rank"){
       h4("Please wait for a few minutes for calculation"),
       
       ##### INPUT BOX #######
-      box(title = "Sex-biasedMne differential gene rank",
+      box(title = "Sex differential genes of each dataset",
           selectInput(NS(id,"region"),"brain region",
                       choices = list("AMY" = 1, "CBC" = 2, "CC" = 3,
                                      "FC" = 4, "HIP" = 5, "MED" = 6,
