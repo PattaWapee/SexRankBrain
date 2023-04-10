@@ -2,7 +2,7 @@ library(shiny)
 library(shinydashboard)
 
 source('Healthy_reg.R')
-source('Healthy_allreg.R')
+source('Healthy_allreg2.R')
 source('Summary.R')
 
 WebApp <- function() {
