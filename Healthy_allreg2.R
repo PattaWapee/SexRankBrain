@@ -27,15 +27,6 @@ HealthyAllUI <- function(id,label="RankAll"){
                                         "DE p-value:0.05, DE FC:2.0, RRA p-value:0.05" = 3,
                                         "DE FC cutoff:1.0, RRA p-adjust value:0.05" = 4
                                         ), selected = 1),
-             selectInput(NS(id,"DE_p_value"), "DE p-value cutoff:",
-                         choices = list("0.05" = 0.05, "0.1" = 0.1
-                                        ), selected = 0.05),
-             selectInput(NS(id,"FC"),"FC cutoff", 
-                         choices = list("1.2" = 1.2, "1.5" = 1.5, "2.0" = 2.0
-                                        ), selected = 1.2),
-             selectInput(NS(id,"RRA_p_value"),"RRA p-value cutoff", 
-                         choices = list("0.05" = 0.05, "0.1" = 0.1
-                                        ), selected = 0.05),
              
              )
       ),
