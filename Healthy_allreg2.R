@@ -22,11 +22,12 @@ HealthyAllUI <- function(id,label="RankAll"){
                  title = "Please choose cutoff for RRA rank aggregation",
                  #DTOutput(NS(id,"cutoff"))
              selectInput(NS(id,"Cutoff"), "Please select a cutoff:",
-                         choices = list("DE p-value:0.05, DE FC:1.2, RRA p-value:0.05" = 1, 
+                         choices = list(
+                                        "DE FC cutoff:1.0, RRA p-adjust value:0.05" = 4,
+                                        "DE p-value:0.05, DE FC:1.2, RRA p-value:0.05" = 1, 
                                         "DE p-value:0.05, DE FC:1.5, RRA p-value:0.05" = 2,
-                                        "DE p-value:0.05, DE FC:2.0, RRA p-value:0.05" = 3,
-                                        "DE FC cutoff:1.0, RRA p-adjust value:0.05" = 4
-                                        ), selected = 1),
+                                        "DE p-value:0.05, DE FC:2.0, RRA p-value:0.05" = 3
+                                        ), selected = 4),
              
              )
       ),
